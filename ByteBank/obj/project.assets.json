@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\João Victor\\Documents\\Programação\\Sharp Coders\\Projetos\\ByteBank\\ByteBank\\ByteBank.csproj",
+      "projectUniqueName": "C:\\Users\\João Victor\\Documents\\Programação\\Sharp Coders\\Projetos\\ByteBank -Versão Entrega\\ByteBank\\ByteBank.csproj",
       "projectName": "ByteBank",
-      "projectPath": "C:\\Users\\João Victor\\Documents\\Programação\\Sharp Coders\\Projetos\\ByteBank\\ByteBank\\ByteBank.csproj",
+      "projectPath": "C:\\Users\\João Victor\\Documents\\Programação\\Sharp Coders\\Projetos\\ByteBank -Versão Entrega\\ByteBank\\ByteBank.csproj",
       "packagesPath": "C:\\Users\\João Victor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\João Victor\\Documents\\Programação\\Sharp Coders\\Projetos\\ByteBank\\ByteBank\\obj\\",
+      "outputPath": "C:\\Users\\João Victor\\Documents\\Programação\\Sharp Coders\\Projetos\\ByteBank -Versão Entrega\\ByteBank\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
