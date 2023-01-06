@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
 
 namespace ByteBank1
 {
@@ -74,13 +75,69 @@ namespace ByteBank1
 
         static void ApresentarValorAcumulado(List<double> saldos)
         {
-            Console.WriteLine($"Total acumulado no banco: {saldos.Sum()}");
+            Console.WriteLine($"Total acumulado no banco: R$ {saldos.Sum():F2}", CultureInfo.InvariantCulture);
             // saldos.Sum(); ou .Agregatte(0.0, (x, y) => x + y)
         }
 
         static void ApresentaConta(int index, List<string> cpfs, List<string> titulares, List<double> saldos)
         {
             Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R${saldos[index]:F2}");
+        }
+
+        static void ManipularConta(List<string> cpfs, List<string> titulares, List<double> saldos)
+        {
+            Console.Write("Digite o CPF do titular: ");
+            string cpfParaApresentar = Console.ReadLine();
+            int index = cpfs.FindIndex(cpf => cpf == cpfParaApresentar);
+            
+            int option;
+            double saque, deposito, transferencia;
+
+            Console.WriteLine("Escolha a operação desejada:");
+            Console.WriteLine("1 - Depósito");
+            Console.WriteLine("2 - Saque");
+            Console.WriteLine("3 - Transferência");
+            option = int.Parse(Console.ReadLine());
+
+            switch (option)
+            {
+                case 1:
+                    Console.Write("Digite o valor do depósito: R$ ");
+                    deposito = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    saldos[index] += deposito;
+                    break;
+                case 2:
+                    Console.Write("Digite o valor do saque: R$ ");
+                    saque = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    if (saque > saldos[index])
+                    {
+                        Console.WriteLine("Não é possivel realizar esta operação!");
+                        Console.WriteLine("Saldo indisponível!");
+                        break;
+                    }
+                    else
+                        saldos[index] -= saque;
+                    break;
+                case 3:
+                    Console.Write("Digite o valor da transferência: R$ ");
+                    transferencia = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    if (transferencia > saldos[index])
+                    {
+                        Console.WriteLine("Não é possivel realizar esta operação!");
+                        Console.WriteLine("Saldo indisponível!");
+                        break;
+                    }
+                    else
+                        Console.Write("Digite o CPF de quem vai receber a transferência: ");
+                        string cpfParaApresentar2 = Console.ReadLine();
+                        int index2 = cpfs.FindIndex(cpf => cpf == cpfParaApresentar2);
+                        saldos[index] -= transferencia;
+                        saldos[index2] += transferencia;
+                        break; 
+            }
+
+            
+
         }
 
         public static void Main(string[] args)
@@ -93,37 +150,100 @@ namespace ByteBank1
             List<string> senhas = new List<string>();
             List<double> saldos = new List<double>();
 
-            int option;
+            string login, senha;
+            int option, index;
 
-            do
+            Console.Write("Login: ");
+            login = Console.ReadLine();
+            Console.Write("Senha: ");
+            senha = Console.ReadLine();
+
+            if (login == "admin" && senha == "admin") 
             {
-                ShowMenu();
-                option = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("-----------------");
-
-                switch (option)
+                do
                 {
-                    case 0:
-                        Console.WriteLine("Estou encerrando o programa...");
-                        break;
-                    case 1:
-                        RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
-                        break;
-                    case 2:
-                        DeletarUsuario(cpfs, titulares, senhas, saldos);
-                        break;
-                    case 3:
-                        ListarTodasAsContas(cpfs, titulares, saldos);
-                        break;
-                    case 4:
-                        ApresentarUsuario(cpfs, titulares, saldos);
-                        break;
+                    ShowMenu();
+                    option = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine("-----------------");
+
+                    switch (option)
+                    {
+                        case 0:
+                            Console.WriteLine("Estou encerrando o programa...");
+                            break;
+                        case 1:
+                            RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
+                            break;
+                        case 2:
+                            DeletarUsuario(cpfs, titulares, senhas, saldos);
+                            break;
+                        case 3:
+                            ListarTodasAsContas(cpfs, titulares, saldos);
+                            break;
+                        case 4:
+                            ApresentarUsuario(cpfs, titulares, saldos);
+                            break;
+                        case 5:
+                            ApresentarValorAcumulado(saldos);
+                            break;
+                        case 6:
+                            ManipularConta(cpfs, titulares, saldos);
+                            break;
+                    }
+
+                    Console.WriteLine("-----------------");
+
+                } while (option != 0);
+            } else
+            {
+                do
+                {
+                    Console.WriteLine("Usuário ou senha incorretos! Tente novamente");
+                    Console.Write("Login: ");
+                    login = Console.ReadLine();
+                    Console.Write("Senha: ");
+                    senha = Console.ReadLine();
+                } while (login != "admin" && senha != "admin");
+
+                if (login == "admin" && senha == "admin") 
+                {
+                    ShowMenu();
+                    option = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine("-----------------");
+
+                    switch (option)
+                    {
+                        case 0:
+                            Console.WriteLine("Estou encerrando o programa...");
+                            break;
+                        case 1:
+                            RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
+                            break;
+                        case 2:
+                            DeletarUsuario(cpfs, titulares, senhas, saldos);
+                            break;
+                        case 3:
+                            ListarTodasAsContas(cpfs, titulares, saldos);
+                            break;
+                        case 4:
+                            ApresentarUsuario(cpfs, titulares, saldos);
+                            break;
+                        case 5:
+                            ApresentarValorAcumulado(saldos);
+                            break;
+                        case 6:
+                          ManipularConta(titulares, senhas, saldos);
+                            break;
+                    } while (option != 0);
                 }
 
-                Console.WriteLine("-----------------");
 
-            } while (option != 0);
+
+            }
+
+            
 
 
 
